@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <!-- pybo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Hello pybo!</title>
+</head>
+<body>
+    <div class="container my-3">
+    <!--네비게이션-->
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand navbar-dark bg-primary text-white" href="{% url 'pybo:index' %}">HOME</a>
+        </div>
+      </nav>
+    <!--기본 탬플릿 안에 삽입될 내용 start -->
+    {% block content %}
+    {% endblock %}
+    <!--기본 탬플릿 안에 삽입될 내용 end -->
+    </div>
+</body>
+</html>
