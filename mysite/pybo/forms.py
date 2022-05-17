@@ -1,5 +1,5 @@
 from django import forms
-from pybo.models import Question
+from pybo.models import Question, Answer
 
 #장고 폼. ModleForm 모델폼 Form 폼 상속
 #모델폼 내부에는 반드시 Meta 클래스가 있어야 함. 모델 폼이 사용할 모델과 모델의 필드 적기
@@ -19,5 +19,11 @@ class QuestionForm(forms.ModelForm) :
             'content': '내용',
         }
 
-
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['content']
+        labels = {
+            'content': '답변내용',
+        }
 
