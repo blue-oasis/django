@@ -8,10 +8,29 @@
                 {{ question.content }}
             </div>
             <div class="text-end">
-                    <p class="card-text"><small class="text-muted"> 
-                        {{ question.create_date }}</small></p>
+                    <p class="card-text"><small class="text-muted">
+                        {% if question.modify_date %} <!--수정 시간 표시-->
+                            <div>{{ question.modify_date }}에 수정됨</div>
+                        {% endif %}
+                        <div class="mb-2">{{ question.create_date }}</div>
+                        {{ question.author.username }}</small></p>
             </div>
         </div>
+        {% if request.user == question.author %}
+        <div class="my-3 px-3 d-grid gap-2 d-md-flex justify-content-md-end"> <!--질문 수정버튼 -->
+            <a href="{% url 'pybo:question_modify' question.id %}" class="btn btn-sm btn-outline-secondary">
+                수정
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                </svg></a>
+            <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'pybo:question_delete' question.id %}">
+                삭제
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                </svg>
+            </a>
+        </div>
+        {% endif %}
     </div>
     <h5 class="border-bottom my-3 py-2 bg-primary text-white" >
         {{ question.answer_set.count }}개의 답변이 있습니다.
@@ -23,10 +42,29 @@
             {{ answer.content }}
         </div>
         <div class="text-end">
-            <p class="card-text"><small class="text-muted"> 
-                {{ answer.create_date }}</small></p>
+            <p class="card-text"><small class="text-muted">
+                {% if answer.modify_date %} <!--수정 시간 표시-->
+                    <div>{{ answer.modify_date }}에 수정됨</div>
+                {% endif %}
+                <div class="mb-2">{{ answer.create_date }}</div>
+                {{ answer.author.username }}</small></p>
             </div>
         </div>
+        {% if request.user == answer.author %}
+        <div class="my-3 px-3 d-grid gap-2 d-md-flex justify-content-md-end"> <!-- 답변 수정버튼 -->
+            <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outline-secondary">
+                수정
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                </svg></a>
+            <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'pybo:answer_delete' answer.id %}">
+                삭제
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                </svg>
+            </a>
+        </div>
+        {% endif %}
     </div>
 
 
@@ -44,9 +82,15 @@
             {% endfor %}
             </div>
         {% endif %}
-
+    <hr>
+    <svg class="my-3" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="blue" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+</svg>
     <div class="form-group">
-        <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+        <textarea name="content" id="content"
+                  {% if not user.is_authenticated %}disabled{% endif %} rows="10" class="form-control"></textarea>
+                    <!-- 로그아웃 상태면 답변 작성 금지-->
     </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <input type="submit" value="답변 등록" class="btn btn-primary my-3 me-md-2">
@@ -54,6 +98,28 @@
 </form>
 {% endblock %}
 
-    
+{% block script %}
+<!-- 자바스크립트/제이쿼리 -->
+<!--script type="text/javascript">
+    $(document).ready(function(){
+        $(".delete").on('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = $(this).data('uri');
+            }
+        });
+    });
+</script-->
+<!--자바스크립트 -->
+<script type="text/javascript">
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+</script>
+{% endblock %}
     
     
