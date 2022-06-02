@@ -20,7 +20,7 @@
         <div class="my-3 px-3 d-grid gap-2 d-md-flex justify-content-md-end"> <!--질문 수정/삭제/추천버튼 -->
             <a href="javascript:void(0)" data-uri="{% url 'pybo:question_vote' question.id %}"
                class="recommend btn btn-sm btn-outline-secondary">추천
-            <span class="badge rounded-pill bg-success">{{question.voter.count}}</span>
+            <span class="badge rounded-pill bg-primary">{{question.voter.count}}</span>
             </a>
         {% if request.user == question.author %}
             <a href="{% url 'pybo:question_modify' question.id %}" class="btn btn-sm btn-outline-secondary">
@@ -60,7 +60,7 @@
         <div class="my-3 px-3 d-grid gap-2 d-md-flex justify-content-md-end"> <!-- 답변 추천/수정/삭제 버튼 -->
             <a href="javascript:void(0)" data-uri="{% url 'pybo:answer_vote' answer.id %}"
                 class="recommend btn btn-sm btn-outline-secondary">추천
-                <span class="badge rounded-pill bg-success">{{answer.voter.count}}</span>
+                <span class="badge rounded-pill bg-primary">{{answer.voter.count}}</span>
             </a>
         {% if request.user == answer.author %}
             <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outline-secondary">
