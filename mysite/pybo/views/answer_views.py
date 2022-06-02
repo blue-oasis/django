@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 from django.http import HttpResponseNotAllowed
 
@@ -20,7 +20,8 @@ def answer_create(request, question_id):
             answer.create_date = timezone.now()
             answer.question = question
             answer.save()
-            return redirect('pybo:detail', question_id=question.id)
+            return redirect('{}#answer_{}'.format(resolve_url('pybo:detail', question_id=question.id), answer.id))
+            #return redirect('pybo:detail', question_id=question.id) 윗줄 앵커 적용 수정
             #return redirect('pybo/detail', question_id=question.id) /쓰면 고장남
             #경로 / , urls name 사용 app_name:name
 
@@ -47,7 +48,8 @@ def answer_modify(request, answer_id):
             answer.author = request.user
             answer.modify_date = timezone.now() #수정일시 저장
             answer.save()
-            return redirect('pybo:detail', question_id=answer.question.id)
+            return redirect('{}#answer_{}'.format(resolve_url('pybo:detail', question_id=answer.question.id), answer.id))
+            #return redirect('pybo:detail', question_id=answer.question.id) 앵커 적용 수정
     else:
         form = AnswerForm(instance=answer)
     context = {'answer': answer, 'form': form}
@@ -71,4 +73,5 @@ def answer_vote(request, answer_id):
         messages.error(request, '본인이 작성한 글은 추천할수 없습니다.')
     else:
         answer.voter.add(request.user)
-    return redirect('pybo:detail', question_id=answer.question.id)
+    return redirect('{}#answer_{}'.format(resolve_url('pybo:detail', question_id=answer.question.id), answer.id))
+   # return redirect('pybo:detail', question_id=answer.question.id) 앵커적용 수정
