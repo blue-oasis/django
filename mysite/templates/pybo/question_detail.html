@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+{% load pybo_filter %}
 {% block content %}
 
     <h2 class="border-bottom py-2">{{ question.subject }}</h2>
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;">
-                {{ question.content }}
+            <div class="card-text">
+                {{ question.content|mark }}
             </div>
             <div class="text-end">
                     <p class="card-text"><small class="text-muted">
                         {% if question.modify_date %} <!--수정 시간 표시-->
-                            <div>{{ question.modify_date }}에 수정됨</div>
+                        <div>{{ question.modify_date }}에 수정됨</div>
                         {% endif %}
                         <div class="mb-2">{{ question.create_date }}</div>
                         {{ question.author.username }}</small></p>
@@ -45,8 +46,8 @@
     <a id="answer_{{ answer.id }}"></a>
     <div class="card my-3">
         <div class="card-body">
-        <div class="card-text" style="white-space: pre-line;">
-            {{ answer.content }}
+        <div class="card-text">
+            {{ answer.content|mark }}
         </div>
         <div class="text-end">
             <p class="card-text"><small class="text-muted">
